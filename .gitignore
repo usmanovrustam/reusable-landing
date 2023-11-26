@@ -1,0 +1,12 @@
+.DS_Store
+.vscode
+.firebase
+.firebaserc
+# Node.js
+node_modules/
+
+# Firebase
+firebase.json
+firebase-debug.log
+.firestore
+firebase-debug.log
