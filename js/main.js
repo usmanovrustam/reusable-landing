@@ -1,11 +1,11 @@
 var firebaseConfig = {
-  apiKey: "AIzaSyA-J0eGLJbx8sLqC38GXyrZwRUtVfBv2ag",
-  authDomain: "max-trusted.firebaseapp.com",
-  projectId: "max-trusted",
-  storageBucket: "max-trusted.appspot.com",
-  messagingSenderId: "637918696194",
-  appId: "1:637918696194:web:026cc515cc694bab45e81b",
-  measurementId: "G-SZ18CX6LWS",
+  apiKey: "AIzaSyCgXOGOK5tQD5VPcebOrl7QGZD4z7p9nxI",
+  authDomain: "globalmove-landing.firebaseapp.com",
+  projectId: "globalmove-landing",
+  storageBucket: "globalmove-landing.appspot.com",
+  messagingSenderId: "97621362657",
+  appId: "1:97621362657:web:ebc698f0067cfd60ed34a0",
+  measurementId: "G-K3DS3592NC"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -14,22 +14,28 @@ const firestore = firebase.firestore();
 
 const menuContainer = document.querySelector(".menu__container");
 const targetContainer = document.querySelector(".target__container");
-const aboutContainer = document.querySelector(".aboud__data");
+const aboutContainer = document.querySelector(".about__container");
+const homeContainer = document.querySelector(".home__container");
 
 firestore
   .collection("about")
   .get()
   .then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-      if (doc.exists) {
-        const data = doc.data();
-        document.querySelector(".section-title").textContent = data.title;
-        document.querySelector(".about__description").textContent =
-          data.description;
-      } else {
-        console.log("No such document!");
-      }
+      const data = doc.data();
+
+      aboutContainer.innerHTML = `
+        <div class="about__data">
+          <span class="section-subtitle about__initial">О нас</span>
+          <h2 class="section-title about__initial">${data.title}</h2>
+          <p class="about__description">${data.description}</p>
+        </div>
+        <img src="${data.image}" alt="" class="about__img" />
+      `;
     });
+  })
+  .catch((error) => {
+    console.log("Error getting document:", error);
   });
 
 firestore
@@ -71,6 +77,109 @@ firestore
 
       targetContainer.appendChild(newTargetContent);
     });
+  });
+
+
+firestore
+  .collection("home")
+  .get()
+  .then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+
+
+      homeContainer.innerHTML = `
+        <div class="home__data">
+          <h1 class="home__title">${data.title}</h1>
+          <h2 class="home__subtitle">${data.subtitle}</h2>
+          <a href="#contact" class="button">Свяжитесь с нами</a>
+        </div>
+        <img src="${data.image}" alt="" class="home__img" />
+      `;
+    });
+  })
+  .catch((error) => {
+    console.log("Error getting document:", error);
+  });
+
+firestore
+  .collection("contact")
+  .doc("contact")
+  .get()
+  .then((doc) => {
+    if (doc.exists) {
+      const data = doc.data();
+      const contactButton = document.querySelector(".contact__button a");
+      contactButton.href = "mailto:" + data.email;
+    } else {
+      console.log("No such document!");
+    }
+  })
+  .catch((error) => {
+    console.log("Error getting document:", error);
+  });
+
+const footerDescription = document.querySelector(".footer__description");
+
+firestore
+  .collection("footer")
+  .doc("description")
+  .get()
+  .then((doc) => {
+    if (doc.exists) {
+      const data = doc.data();
+      footerDescription.textContent = data.description;
+    } else {
+      console.log("No such document!");
+    }
+  })
+  .catch((error) => {
+    console.log("Error getting document:", error);
+  });
+
+const footerSocialContainer = document.querySelector(".footer__content:nth-child(1) div");
+
+firestore
+  .collection("footer")
+  .doc("social_media")
+  .get()
+  .then((doc) => {
+    if (doc.exists) {
+      const data = doc.data();
+      footerSocialContainer.innerHTML = `
+        <a href="${data.facebook}" class="footer__social"><i class="bx bxl-facebook"></i></a>
+        <a href="${data.instagram}" class="footer__social"><i class="bx bxl-instagram"></i></a>
+        <a href="${data.telegram}" class="footer__social"><i class="bx bxl-telegram"></i></a>
+      `;
+    } else {
+      console.log("No such document!");
+    }
+  })
+  .catch((error) => {
+    console.log("Error getting document:", error);
+  });
+
+const footerAddressContainer = document.querySelector(".footer__content:nth-child(3) ul");
+
+firestore
+  .collection("footer")
+  .doc("address")
+  .get()
+  .then((doc) => {
+    if (doc.exists) {
+      const data = doc.data();
+      footerAddressContainer.innerHTML = `
+          <li>${data.city}</li>
+          <li>${data.street}</li>
+          <li>${data.phone}</li>
+          <li>${data.email}</li>
+        `;
+    } else {
+      console.log("No such document!");
+    }
+  })
+  .catch((error) => {
+    console.log("Error getting document:", error);
   });
 
 const showMenu = (toggleId, navId) => {
