@@ -16,6 +16,20 @@ const menuContainer = document.querySelector(".menu__container");
 const targetContainer = document.querySelector(".target__container");
 const aboutContainer = document.querySelector(".about__container");
 const homeContainer = document.querySelector(".home__container");
+const privacyContainer = document.querySelector(".privacy-content");
+
+firestore.collection("privacy").doc("policy").get()
+  .then((doc) => {
+    if (doc.exists) {
+      const privacyContent = doc.data().content;
+      privacyContainer.innerHTML = privacyContent;
+    } else {
+      console.log("Privacy policy document does not exist");
+    }
+  })
+  .catch((error) => {
+    console.error("Error getting privacy policy document:", error);
+  });
 
 firestore
   .collection("about")

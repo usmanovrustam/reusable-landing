@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Правила и условия использования UzChess</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
@@ -17,8 +20,8 @@
             --title-color: #393939;
             --text-color: #707070;
             --text-color-light: #a6a6a6;
-            --body-color: #1d2521;
-            --container-color: #27302c;
+            --body-color: #fbfefd;
+            --container-color: #ffffff;
 
             --body-font: "Poppins", sans-serif;
             --biggest-font-size: 2.25rem;
@@ -65,22 +68,6 @@
             scroll-behavior: smooth;
         }
 
-        body.dark-theme {
-            --title-color: #f1f3f2;
-            --text-color: #c7d1cc;
-            --body-color: #1d2521;
-            --container-color: #27302c;
-        }
-
-        .change-theme {
-            position: absolute;
-            right: 1rem;
-            top: 1.8rem;
-            color: var(--text-color);
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
         body {
             margin: 0;
             padding-top: var(--header-height);
@@ -125,6 +112,7 @@
             font-size: var(--h1-font-size);
             color: var(--title-color);
             margin: 0 auto;
+            text-align: center;
         }
 
         .footer {
@@ -181,42 +169,11 @@
     </style>
 </head>
 
-<body class="dark-theme">
+<body>
     <main class="main bd-container">
         <h1 class="header__title">Правила и условия использования UzChess</h1>
         <section class="section">
-            <h2 class="section__title green-title">Общие условия и правила</h2>
-            <ol class="list">
-                <li>Пользователям приложения необходимо использовать материалы и данные приложения только в целях
-                    ознакомления и собственного использования. Распространение, копирование или иные действия с
-                    материалами
-                    и данными, содержащимися в приложении, запрещены.</li>
-                <li>Приложение "UzChess" предоставляет свои услуги бесплатно, и не требует оплаты от пользователей.</li>
-                <li>Пользователи могут предоставить свои личные данные в процессе использования приложения. Эти данные
-                    хранятся конфиденциально и используются только в статистических и аналитических целях.</li>
-                <li>Приложение "UzChess" предоставляет равные услуги всем пользователям, независимо от их
-                    национальности,
-                    пола, социального статуса или иных обстоятельств.</li>
-                <li>Пользователи имеют право удалить приложение по своему усмотрению. При этом их личные данные будут
-                    автоматически удалены.</li>
-                <li>Разработчики приложения "UzChess" имеют право вносить изменения, обновлять или прекращать услуги.
-                </li>
-                <li>Пользователи обязуются соблюдать эти условия и правила. В противном случае, их права как
-                    пользователей
-                    приложения могут быть аннулированы.</li>
-            </ol>
-        </section>
-
-        <section class="section">
-            <h2 class="section__title green-title">Условия использования пользовательских данных</h2>
-            <ol class="list">
-                <li>Собранные приложением "UzChess" данные пользователя используются только в статистических и
-                    аналитических целях.</li>
-                <li>Эти данные не продаются третьим лицам и не предоставляются им.</li>
-                <li>Личные данные пользователей хранятся конфиденциально и защищаются в соответствии с требованиями
-                    безопасности.</li>
-                <li>Пользователи имеют право просматривать и изменять свои личные данные.</li>
-            </ol>
+            <div id="privacy-content"></div>
         </section>
     </main>
 
@@ -224,6 +181,7 @@
         <p class="footer__copy">&#169; <span id="currentYear"></span> Global Move. Все права защищены</p>
     </footer>
 
+    <script src="js/privacy.js"></script>
     <script>
         document.getElementById("currentYear").textContent = new Date().getFullYear();
     </script>
